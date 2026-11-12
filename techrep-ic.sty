@@ -1,0 +1,263 @@
+% COVER PAGE FOR IC-UNICAMP TECHNICAL REPORTS
+% Last edited on 2001-04-03 04:27:30 by stolfi
+% Based on rel-tec-ic.sty of 23 May 1996, by Pedro J. de Rezende.
+%
+% The package techrep-ic defines a \TRMakeCover macro that 
+% prints a cover page for the standard IC-Unicamp technical report
+% format. The various cover fields (title, author, report number, etc.)
+% are defined by auxiliary macros \TRTitile, \TRAuthor, \TRMonth, etc.
+%
+% Modified Jun 1997 by J. Stolfi:
+%   Removed list of previous reports.
+%   Modified to work also as a LaTeX 2e package.
+%
+% Modified Aug 1997 by J. Stolfi:
+%   Reset the page counter to zero on cover page.
+%
+% Modified Fev 2001 by J. Stolfi:
+%   Added macros \TRAuthor, \TRTitle.
+%   Redefined \TRMonth to take a numeric month.
+%   Redefined \TRNumber to take 3 digits.
+%   Added the Institute's name, logo, and color background.
+%   
+
+% Hack to set \endlinechar negative without losing the old value:
+\advance\endlinechar by -256%
+
+\ifx\xipt\undefined
+  \typeout{LaTeX 2e package `techrep-ic' -- Released 25 Feb 2001}
+  \ifx\pagecolor\undefined
+    \usepackage{color}
+  \fi
+\else
+  \typeout{LaTeX 2.09 style option `techrep-ic' -- Released 25 Feb 2001}
+\fi
+
+% Margins:
+
+  \topmargin=0.00in
+  \oddsidemargin=0.225in
+  \evensidemargin=\oddsidemargin
+  \marginparwidth=\evensidemargin
+
+% Dimensions of text:
+
+  \textheight=8.25in
+  \textwidth=6.00in
+
+% These macros should be used by the author, before the \maketitle,
+% to define the report number and date:
+
+  \def\TRTitle#1{\def\TRtitl@{#1}}
+  \TRTitle{A Generic Technical Report}
+
+  \def\TRAuthor#1{\def\TRauth@r{#1}}
+  \TRAuthor{Generic Author One and Generic Author Two and Generic Author Three}
+
+  \def\TRNumber#1{\def\TRnumb@r{#1}}
+  \TRNumber{025}
+
+  \def\TRYear#1{\def\TRye@r{#1}}
+  \TRYear{01}
+
+  \def\TRMonth#1{\def\TRm@nth{#1}}
+  \TRMonth{\month}
+  
+% Handy macro for current month and year, in Portuguese:
+
+  \def\TRm@nthP{
+    \ifcase\TRm@nth\or
+    Janeiro\or Fevereiro\or Mar\c{c}o\or 
+    Abril\or Maio\or Junho\or 
+    Julho\or Agosto\or Setembro\or 
+    Outubro\or Novembro\or Dezembro\fi
+  }
+
+  \def\TRm@nthE{
+    \ifcase\TRm@nth\or
+    January\or February\or March\or 
+    April\or May\or June\or 
+    July\or August\or September\or 
+    October\or November\or December\fi
+  }
+
+% Cover page design
+
+  \newcommand{\TRf@tbox}[2]{
+    \vbox{\offinterlineskip
+      \null\kern#1
+      \hbox{\null\kern#1#2\kern#1\null}
+      \kern#1\null
+    }
+  }
+  
+% Color boxes
+
+  \ifx\colorbox\undefined
+    \newcommand{\TRc@lorbox}[2]{\hbox{#2}}
+  \else
+    \newcommand{\TRc@lorbox}[2]{\hbox{#2}}
+  \fi
+
+% Cover page main font style
+
+  \ifx\xipt\undefined
+    % (LaTeX 2e)
+%    \newcommand{\TR@sf}[1]{{\usefont{T1}{cmss}{m}{n}#1}}
+%    \newcommand{\TR@bf}[1]{{\usefont{T1}{cmr}{bx}{n}#1}}
+%    \newcommand{\TR@it}[1]{{\usefont{T1}{cmr}{m}{it}#1}}
+%    \newcommand{\TR@Huge}{\fontsize{25}{30pt}}
+%    \newcommand{\TR@LARGE}{\fontsize{17}{22pt}}
+%    \newcommand{\TR@normal}{\fontsize{11}{13.6pt}}
+%    \newcommand{\TR@small}{\fontsize{10}{12pt}}
+    \newcommand{\TR@sf}[1]{{\sf#1}}
+    \newcommand{\TR@bf}[1]{{\bf#1}}
+    \newcommand{\TR@it}[1]{{\it#1}}
+    \newcommand{\TR@Huge}{\Huge}
+    \newcommand{\TR@LARGE}{\LARGE}
+    \newcommand{\TR@normal}{\normalsize}
+    \newcommand{\TR@small}{\small}
+    \DeclareMathSizes{11}{11}{8}{5}
+  \else
+    % (LaTeX 2.09)
+    \newcommand{\TR@sf}[1]{{\sf#1}}
+    \newcommand{\TR@bf}[1]{{\bf#1}}
+    \newcommand{\TR@it}[1]{{\it#1}}
+    % \newcommand{\TR@sf}[1]{{#1}}
+    \newcommand{\TR@Huge}{\Huge}
+    \newcommand{\TR@LARGE}{\LARGE}
+    \newcommand{\TR@normal}{\normalsize}
+    \newcommand{\TR@small}{\small}
+  \fi
+  \def\TR@titwd{11.7cm}
+  % \def\TR@titwd{12.7cm}
+
+% \TRMakeCover creates the cover page:
+
+  \newsavebox{\TR@tmpbox}
+  
+  \def\TRMakeCover{
+    \bgroup
+      \newpage
+      \c@page\z@
+      \thispagestyle{empty}
+      \parindent 0pt
+      \parskip 0pt
+      \ifx\xipt\undefined
+        % (LaTeX 2e)
+        \definecolor{TRpink}{rgb}{1.00,0.90,1.00}
+        \definecolor{TRBlue}{rgb}{0.70,0.85,1.00}
+        \pagecolor{white}
+      \else
+        % (LaTeX 2.09)
+        \xipt 
+      \fi
+      \TR@normal
+      \null
+      \vskip -1cm
+      \vbox to 0pt{
+        \null\kern -6cm 
+        \hbox to 0pt{
+          \null\kern -4cm
+          \TRc@lorbox{white}{\rule{0cm}{32cm}\rule{5.5cm}{0cm}}
+          \hss
+        }
+        \vss
+      }
+      \begin{center}
+        \leavevmode
+        \hbox to 10pt{
+          \null\hss
+          \TRc@lorbox{white}{
+            \TRf@tbox{5pt}{
+              \valign{\vfil##\vfil\cr
+                \noalign{\kern 10pt}
+                \hbox{
+                  \begin{minipage}[c]{\TR@titwd} % was 12.7cm when  \textsf{}
+                    {\centering\TR@Huge\TR@sf{Laborat{\'o}rio VISGRAF}\par}
+                    \parfillskip 0pt\parskip 0pt
+                    \vskip 5pt
+                    {\TR@LARGE\TR@sf{Instituto de Matem{\'a}tica Pura e Aplicada}\par}
+                  \end{minipage}
+                }
+                \cr
+                \noalign{\kern 20pt}
+              }
+            }
+          }
+          \hss
+          \null
+        }
+        \vskip 63mm \hskip 20mm
+        \TRc@lorbox{white}{
+          \TRf@tbox{4mm}{
+            \framebox[125mm]{
+              \vbox to 55mm{
+                \hsize=100mm
+                \textwidth=\hsize
+                \linewidth=\hsize
+                \null
+                {\centering
+                  \null
+                  \baselineskip 12pt
+                  \lineskip 1pt plus 3pt minus 0pt
+                  \lineskiplimit 1pt
+                  \vfill
+                  \TR@normal\TR@bf{\TRtitl@\par}
+                  \vskip 1.5ex
+                  \TR@normal\TR@it{
+                    \def\and{\end{tabular}\hskip 1em plus .17fil\begin{tabular}[t]{c}}
+                    \begin{tabular}[t]{c}
+                      \TRauth@r
+                    \end{tabular}
+                    \par
+                  }
+                  \vfill
+                  \TR@normal\TR@sf{
+                    Technical Report
+                    \qquad
+                    TR-{\TRye@r}-{\TRnumb@r}
+                    \qquad
+                    Relat{\'o}rio T{\'e}cnico
+                  }
+                  \par
+                  \kern -5pt
+                  \null
+                }
+                \null
+              }
+            }
+          }
+        }
+        \vskip 5mm
+        { 
+          \TR@normal\TR@sf{
+            {\TRm@nthE}
+            \quad-\quad
+            20{\TRye@r}
+            \quad-\quad
+            {\TRm@nthP}
+          }
+        }
+        \par\vskip 35mm
+        { 
+          \TR@small
+          \TR@sf{The contents of this report are the sole responsibility {}
+          of the authors.}
+          \par
+          \TR@sf{O conte{\'u}do do presente relat{\'o}rio {\'e} de {\'u}nica {}
+          responsabilidade dos autores.}
+          \par
+        }
+        \vfill
+      \end{center}
+    \egroup
+    \c@page\z@
+    \newpage
+    \ifx\xipt\undefined
+      \pagecolor{white}
+    \fi
+  }
+
+% Restore \endlinechar:
+\advance\endlinechar by +256%
